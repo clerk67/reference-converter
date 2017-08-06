@@ -1,0 +1,11 @@
+{
+  "name": "reference-converter",
+  "version": "1.0.0",
+  "description": "Reference converter (ACS vs WIREY) for scientific papers",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "clerk67",
+  "license": "MIT"
+}
