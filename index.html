@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reference Converter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+    body {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    h3 {
+      margin-top: 2rem;
+    }
+    hr {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    textarea {
+      font-family: monospace;
+      font-size: 16px !important;
+    }
+    .result {
+      background-color: #eee;
+      border-radius: .25rem;
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Reference Converter</h1>
+      <p class="lead">Reference converter (ACS vs WIREY) for scientific papers</p>
+      <hr>
+
+      <div class="form-group">
+        <label class="control-label">Source Reference Text</label>
+        <textarea class="form-control" id="source" rows="5"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Converting Options</label>
+        <select class="form-control" id="mode">
+          <option value="format">Simple Format</option>
+          <option value="acs2wirey">Converting Format (ACS -&gt; WIREY)</option>
+          <option value="wirey2acs">Converting Format (WIREY -&gt; ACS)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onClick="format();">Format</button> &nbsp;
+      <hr>
+
+      <h3>Result</h3>
+      <p id="result" class="result"><span style="color: grey;">Result will be shown here.</span></p>
+      <p>The above result can be copied and pasted into Microsoft Word without loss of text decorations.</p>
+      <hr>
+
+      <h3>Converting Options</h3>
+      <dl class="row" style="margin-top: 1rem;">
+        <dt class="col-sm-3">Simple Format</dt>
+        <dd class="col-sm-9">Journal title, publish year, and volume number are automatically stylized.</dd>
+        <dt class="col-sm-3">Converting Format</dt>
+        <dd class="col-sm-9">ACS / WIREY styles are converted to each other, then stylized by Simple Format.</dd>
+      </dl>
+      <hr>
+
+      <h3>Samples</h3>
+      <p class="lead">The following reference text will be converted to each other and stylized.</p>
+      <h5>ACS Style</h5>
+      <pre>[1] Aikawa, K.; Maruyama, K.; Honda, K.; Mikami, K. Org. Lett. 2015, 17, 4882-4885.
+[2] Ito, S.; Ueta, Y.; Ngo, T. T. T.; Kobayashi, M.; Hashizume, D.; Nishida, J.; Yamashita, Y.; Mikami, K. J. Am. Chem. Soc. 2013, 135, 17610-17616.
+[3] Iida, T.; Hashimoto, R.; Aikawa, K.; Ito, S. Angew. Chem. Int. Ed. 2012, 51, 9535-9538.</pre>
+      <h5>WIREY Style</h5>
+      <pre>[1] K. Aikawa, K. Maruyama, K. Honda, K. Mikami, Org. Lett. 2015, 17, 4882-4885.
+[2] S. Ito, Y. Ueta, T. T. T. Ngo, M. Kobayashi, D. Hashizume, J. Nishida, Y. Yamashita, K. Mikami, J. Am. Chem. Soc. 2013, 135, 17610-17616.
+[3] T. Iida, R. Hashimoto, K. Aikawa, S. Ito, Angew. Chem. Int. Ed. 2012, 51, 9535-9538.</pre>
+      <hr>
+
+      <h5>Specifications</h5>
+      <ul>
+        <li>Leading indices such as <code>(1)</code>, <code>1)</code>, <code>[1]</code>, and <code>(a)</code> does not matter. However, presence of <code>1.</code> and <code>a.</code> may produce unexpected results.</li>
+        <li>Multiple lines can be converted all at once. Each lines must have a single reference information.</li>
+      </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/clerk67/reference-converter/master/dist/reference-converter.min.js" type="text/javascript"></script>
+    <script>
+    function format() {
+      const config = {
+        data: document.getElementById('source').value,
+        mode: document.getElementById('mode').value,
+      };
+      const result = ReferenceConverter.convert(config);
+      if (result.error) {
+        document.getElementById('result').innerHTML = '<strong>ERROR</strong>: ' + result.error;
+      } else {
+        document.getElementById('result').innerHTML = result.output;
+      }
+    }
+    </script>
+  </body>
+</html>
