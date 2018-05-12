@@ -2,6 +2,24 @@
 
 Reference converter (ACS vs WIREY) for scientific papers
 
+## Scripting
+
+```html
+<script src="dist/reference-formatter.min.js" type="text/javascript"></script>
+<script>
+  const config = {
+    data: '[1] K. Mikami, Org. Lett. 2015, 17, 4882-4885.',  // source reference text
+    mode: 'wirey2acs',  // conversion mode [format|acs2wirey|wirey2acs]
+  };
+  const result = ReferenceConverter.convert(config);
+  if (result.error) {
+    console.log('ERROR:', result.error);
+  } else {
+    console.log(result.output);
+  }
+</script>
+```
+
 ## Conversion Modes
 
 - Simple Format
@@ -10,6 +28,8 @@ Reference converter (ACS vs WIREY) for scientific papers
   - ACS / WIREY styles are converted to each other, then stylized by Simple Format.
 
 ## Samples
+
+The following reference text will be converted to each other and stylized.
 
 - ACS Style
 
